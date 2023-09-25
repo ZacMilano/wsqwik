@@ -1,4 +1,9 @@
 import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import { server$ } from "@builder.io/qwik-city";
+
+const serverLog = server$(function (...args: unknown[]) {
+	console.log.apply(console, args);
+});
 
 export default component$(() => {
 	// Happens only on the server
@@ -6,6 +11,8 @@ export default component$(() => {
 
 	const filter = useSignal("");
 	const debouncedFilter = useSignal("");
+
+	serverLog(1, 2, 3);
 
 	// Running the effect on the server so that we can learn about the tracked
 	// value, if it changes. Establishes a connection
