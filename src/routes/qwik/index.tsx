@@ -8,16 +8,21 @@ export default component$(() => {
 
 	return (
 		<div>
-			Hello Qwik!
+			<p>Hello Qwik!</p>
+
 			<button
 				onClick$={async () => {
-					const fn = server$(() => console.log("Server only"));
+					const fn = server$(() =>
+						console.log("Server only, expensive!", count.value)
+					);
 					fn();
 				}}
 			>
 				greet
 			</button>
-			Count: {count.value}
+
+			<p>Count: {count.value}</p>
+
 			<button
 				onClick$={() => {
 					count.value++;
