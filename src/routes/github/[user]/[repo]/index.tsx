@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { Resource, component$ } from "@builder.io/qwik";
 import {
 	Form,
 	Link,
@@ -91,11 +91,16 @@ export const useSetFavoriteAction = routeAction$(
 	zod$({ favorite: z.coerce.boolean() })
 );
 
+export const useSlowData = routeLoader$(async () => {
+	return async () => <span>Slow Data</span>;
+});
+
 export default component$(() => {
 	const repo = useRepository();
 	const location = useLocation();
 	const isFavorite = useIsFavorite();
 	const setFavoriteAction = useSetFavoriteAction();
+	const slowData = useSlowData();
 
 	return (
 		<div>
@@ -107,6 +112,11 @@ export default component$(() => {
 				/{location.params.repo}
 			</h3>
 			<div>
+				<Resource
+					value={slowData}
+					onPending={() => <p>loading...</p>}
+					onResolved={(data) => <p>resolved: {data}</p>}
+				/>
 				<b>Repo:</b> {repo.value.name}
 				<Form action={setFavoriteAction}>
 					<input
