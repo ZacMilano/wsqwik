@@ -7,7 +7,7 @@ export default component$(() => {
 	useTask$(({ track }) => {
 		const value = track(() => filter.value);
 		const id = setTimeout(() => {
-			debouncedFilter.value = filter.value;
+			debouncedFilter.value = value;
 		}, 400);
 		return () => clearTimeout(id);
 	});
