@@ -25,10 +25,12 @@
   },
   "devDependencies": {
     "@auth/core": "^0.13.0",
+    "@builder.io/dev-tools": "^0.0.44",
     "@builder.io/qwik": "^1.2.12",
     "@builder.io/qwik-auth": "0.1.1",
     "@builder.io/qwik-city": "^1.2.12",
     "@builder.io/qwik-react": "0.5.0",
+    "@builder.io/sdk-qwik": "^0.4.5",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.0",
