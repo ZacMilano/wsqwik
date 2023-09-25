@@ -1,9 +1,14 @@
 import { component$, useSignal, useTask$ } from "@builder.io/qwik";
 
 export default component$(() => {
+	// Happens only on the server
+	console.log("Render component");
+
 	const filter = useSignal("");
 	const debouncedFilter = useSignal("");
 
+	// Running the effect on the server so that we can learn about the tracked
+	// value, if it changes. Establishes a connection
 	useTask$(({ track }) => {
 		const value = track(() => filter.value);
 		const id = setTimeout(() => {
