@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { routeLoader$, useLocation } from "@builder.io/qwik-city";
 import type { paths } from "@octokit/openapi-types";
 
 type OrgRepoResponse =
@@ -22,11 +22,21 @@ export const useRepository = routeLoader$(async ({ env, params }) => {
 
 export default component$(() => {
 	const repo = useRepository();
+	const location = useLocation();
 
 	return (
 		<div>
-			<h1>{repo.value.full_name}</h1>
-			<p>{repo.value.description}</p>
+			<h3>
+				Repository:{" "}
+				<a href={"/github/" + location.params.user}>{location.params.user}</a>/
+				{location.params.repo}
+			</h3>
+			<div>
+				<b>Repo:</b> {repo.value.name}
+			</div>
+			<div>
+				<b>Description:</b> {repo.value.description}
+			</div>
 		</div>
 	);
 });
