@@ -1,13 +1,26 @@
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import type { QRL } from "@builder.io/qwik";
+import {
+	component$,
+	useSignal,
+	useTask$,
+	implicit$FirstArg,
+} from "@builder.io/qwik";
 import { server$ } from "@builder.io/qwik-city";
 
 const serverLog = server$(function (...args: unknown[]) {
 	console.log.apply(console, args);
 });
 
+// "QRL is Qwik URL, qute"
+export const demoQrl = async (fn: QRL<() => string>) => {
+	// Can use useTask$ if demo$ is used within a component$ !
+	console.log(await fn());
+};
+
+export const demo$ = implicit$FirstArg(demoQrl);
+
 export default component$(() => {
-	// Happens only on the server
-	console.log("Render component");
+	demo$(() => "abc");
 
 	const filter = useSignal("");
 	const debouncedFilter = useSignal("");
