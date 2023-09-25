@@ -1,4 +1,5 @@
-import { component$, useSignal, $ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
+import { server$ } from "@builder.io/qwik-city";
 
 export default component$(() => {
 	const count = useSignal(0);
@@ -10,7 +11,7 @@ export default component$(() => {
 			Hello Qwik!
 			<button
 				onClick$={async () => {
-					const fn = $(() => console.log("EXPENSIVE"));
+					const fn = server$(() => console.log("Server only"));
 					fn();
 				}}
 			>
