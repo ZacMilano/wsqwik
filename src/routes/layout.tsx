@@ -41,7 +41,6 @@ export default component$(() => {
 			<Header />
 			{user ? (
 				<Form action={logoutAction}>
-					{session.value.user?.name}
 					<button>Sign Out</button>
 					{user.image && <img src={user.image} width={30} height={30} />}
 					<span>
