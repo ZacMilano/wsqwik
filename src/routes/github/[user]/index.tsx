@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { paths } from "@octokit/openapi-types";
 
@@ -23,15 +23,25 @@ export const useRepositories = routeLoader$(async ({ env, params }) => {
 
 export default component$(() => {
 	const repos = useRepositories();
+	const filter = useSignal("");
 
 	return (
 		<div>
+			<input
+				value={filter.value}
+				onChange$={(e, t) => (filter.value = t.value)}
+			/>
+
+			<p>{filter.value}</p>
+
 			<ul>
-				{repos.value.map((repo) => (
-					<li key={repo.full_name}>
-						<a href={`/github/${repo.full_name}`}>{repo.full_name}</a>
-					</li>
-				))}
+				{repos.value
+					.filter((repo) => repo.full_name.indexOf(filter.value) > -1)
+					.map((repo) => (
+						<li key={repo.full_name}>
+							<a href={`/github/${repo.full_name}`}>{repo.full_name}</a>
+						</li>
+					))}
 			</ul>
 		</div>
 	);
