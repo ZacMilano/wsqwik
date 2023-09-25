@@ -1,9 +1,24 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
+import type { paths } from "@octokit/openapi-types";
 
-export const useRepositories = routeLoader$(async () => {
+type OrgReposResponse =
+	paths["/users/{username}/repos"]["get"]["responses"]["200"]["content"]["application/json"];
+
+export const useRepositories = routeLoader$(async ({ env, params }) => {
 	console.log("Loading repos");
-	return ["abc", "xyz"];
+
+	const response = await fetch(
+		`https://api.github.com/users/${params.user}/repos`,
+		{
+			headers: {
+				"User-Agent": "Qwik Workshop",
+				"X-GitHub-Api-Version": "2022-11-28",
+				Authorization: "Bearer " + env.get("PRIVATE_GITHUB_ACCESS_TOKEN"),
+			},
+		}
+	);
+	return (await response.json()) as OrgReposResponse;
 });
 
 export default component$(() => {
@@ -12,8 +27,10 @@ export default component$(() => {
 	return (
 		<div>
 			<ul>
-				{repos.value.map((repo, idx) => (
-					<li key={idx}>{repo}</li>
+				{repos.value.map((repo) => (
+					<li key={repo.full_name}>
+						<a href={`/github/${repo.full_name}`}>{repo.full_name}</a>
+					</li>
 				))}
 			</ul>
 		</div>
