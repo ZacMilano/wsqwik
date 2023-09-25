@@ -62,7 +62,9 @@ export default component$(() => {
 				onResolved={(users) => (
 					<ul>
 						{users.map((user) => (
-							<li key={user.id}>{user.login}</li>
+							<li key={user.id}>
+								<a href={`/github/${user.login}/`}>{user.login}</a>
+							</li>
 						))}
 					</ul>
 				)}
