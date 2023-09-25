@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$, useLocation } from "@builder.io/qwik-city";
+import { Link, routeLoader$, useLocation } from "@builder.io/qwik-city";
 import type { paths } from "@octokit/openapi-types";
 
 type OrgRepoResponse =
@@ -28,8 +28,10 @@ export default component$(() => {
 		<div>
 			<h3>
 				Repository:{" "}
-				<a href={"/github/" + location.params.user}>{location.params.user}</a>/
-				{location.params.repo}
+				<Link href={"/github/" + location.params.user}>
+					{location.params.user}
+				</Link>
+				/{location.params.repo}
 			</h3>
 			<div>
 				<b>Repo:</b> {repo.value.name}
