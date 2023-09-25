@@ -1,4 +1,4 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, useSignal, $ } from "@builder.io/qwik";
 
 export default component$(() => {
 	const count = useSignal(0);
@@ -9,8 +9,9 @@ export default component$(() => {
 		<div>
 			Hello Qwik!
 			<button
-				onClick$={() => {
-					console.log("EXPENSIVE");
+				onClick$={async () => {
+					const fn = $(() => console.log("EXPENSIVE"));
+					fn();
 				}}
 			>
 				greet
