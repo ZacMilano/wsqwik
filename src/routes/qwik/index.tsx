@@ -1,4 +1,4 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { server$ } from "@builder.io/qwik-city";
 
 export default component$(() => {
@@ -30,6 +30,25 @@ export default component$(() => {
 			>
 				+1
 			</button>
+
+			<Clock />
 		</div>
 	);
+});
+
+export const Clock = component$(() => {
+	console.log("Render clock");
+
+	const time = useSignal("loading...");
+
+	useVisibleTask$(() => {
+		const update = () => {
+			time.value = new Date().toISOString();
+		};
+
+		update();
+		setInterval(update, 1000);
+	});
+
+	return <div>{time.value}</div>;
 });
