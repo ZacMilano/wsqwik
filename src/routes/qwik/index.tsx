@@ -3,12 +3,14 @@ import { component$, useSignal } from "@builder.io/qwik";
 export default component$(() => {
 	const count = useSignal(0);
 
+	console.log("Rendering", count.value);
+
 	return (
 		<div>
 			Hello Qwik!
 			<button
 				onClick$={() => {
-					console.log("Hello");
+					console.log("EXPENSIVE");
 				}}
 			>
 				greet
